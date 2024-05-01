@@ -52,4 +52,4 @@ if __name__ == '__main__':
 
     speech_generator = SpeechGenerator(querier, translator, sentiment_analyzer, liwc_analyzer)
 
-    app.run()
+    app.run(host='0.0.0.0', port=10000)
