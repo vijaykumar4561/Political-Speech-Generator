@@ -35,8 +35,8 @@ class SpeechGenerator:
         return self.querier.query(prompt)
 
     def prime_speech(self, generated_speech):
-        prompt = """You need assess the following speech for primings namely Issue Priming, Candidate Attributes Priming, Mood and Emotional Priming, Social Identity Priming, Economic Priming, Value-Based Priming, Repetition and Consistency, Visual and Symbolic Priming Use of Surrogates and Endorsements, Framing and Issue Association,Contextual Priming. Give a rating for each metric on the scale of 10. 1 is the lowest and 10 is the highest. 
-Then, regenerate the speech by improving those metrics and make it sound more human. Output should be only be the regenerated speech.\n\n"""
+        prompt = """You need to assess the following speech for primings namely Issue Priming, Candidate Attributes Priming, Mood and Emotional Priming, Social Identity Priming, Economic Priming, Value-Based Priming, Repetition and Consistency, Visual and Symbolic Priming Use of Surrogates and Endorsements, Framing and Issue Association,Contextual Priming. Give a rating for each metric on the scale of 10. 1 is the lowest and 10 is the highest. 
+Then, regenerate the speech by improving those metrics and make it sound more human. Output should only consist of the regenerated speech and nothing else. Do not even give any heading as Regenerated Speech, output should only be the regenerated speech itself.\n\n"""
         prompt += generated_speech
         return self.querier.query(prompt)
 
