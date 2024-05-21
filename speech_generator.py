@@ -55,6 +55,16 @@ Then, regenerate the speech by improving those metrics and make it sound more hu
         prompt += generated_speech
         return self.querier.query(prompt)
 
+    def apply_rhetorical_devices(self, speech):
+        prompt = """Enhance the speech using rhetorical devices:
+- Repetition: Emphasize key phrases to make them stick.
+- Anaphora: Start consecutive sentences or clauses with the same word or phrase.
+- Metaphors and Analogies: Make complex ideas more relatable and understandable.
+- Triads: Use groups of three to create a rhythm and make your points more memorable.
+\n\n"""
+        prompt += speech
+        return self.querier.query(prompt)
+
     def generate_speech(self, speech, requirements, language="en"):
         base_speech = self.generate_base_speech(speech, requirements)
 
@@ -66,7 +76,11 @@ Then, regenerate the speech by improving those metrics and make it sound more hu
 
         primed_speech = self.prime_speech(liwc_improved_speech)
 
-        filtered_speech = self.filter_speech(primed_speech)
+        generate_metaphor = self.generate_metaphor(primed_speech)
+
+        apply_rhetorical_devices = self.apply_rhetorical_devices(generate_metaphor)
+
+        filtered_speech = self.filter_speech(apply_rhetorical_devices)
 
         if language != "en":
             translated_speech = self.translate_speech(filtered_speech, language)    
