@@ -50,6 +50,11 @@ Then, regenerate the speech by improving those metrics and make it sound more hu
     def translate_speech(self, generated_speech, language):
         return self.translator.translate(generated_speech, language)
 
+    def generate_metaphor(self, generated_speech):
+        prompt = """Generate a metaphor based on the given speech. The metaphor should be rooted in familiar cultural, historical, or regional references to resonate with the Indian audience. Also, use rhetorical devices such as repetition, anaphora, and triads to enhance the speech.\n\n"""
+        prompt += generated_speech
+        return self.querier.query(prompt)
+
     def generate_speech(self, speech, requirements, language="en"):
         base_speech = self.generate_base_speech(speech, requirements)
 
@@ -67,4 +72,7 @@ Then, regenerate the speech by improving those metrics and make it sound more hu
             translated_speech = self.translate_speech(filtered_speech, language)    
             return translated_speech
 
-        return filtered_speech
+        # Generate metaphor and enhance the speech with rhetorical devices
+        final_speech = self.generate_metaphor(filtered_speech)
+        
+        return final_speech
