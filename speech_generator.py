@@ -47,6 +47,27 @@ Then, regenerate the speech by improving those metrics and make it sound more hu
         filtered_text = "\n".join(filtered_lines)
         return filtered_text
 
+     def personalized_messaging(self, voter_data, base_message):
+        prompt = """You are provided with a base message and voter data. Generate a personalized campaign message that uses the voter's name and personal information to create a sense of familiarity and connection.\n\n"""
+        prompt += f"Voter Data: {voter_data}\n"
+        prompt += f"Base Message: {base_message}\n"
+        return self.querier.query(prompt)
+
+
+    def add_local_references(self, voter_data, base_message):
+        prompt = """You are provided with a base message and voter data. Highlight commonalities between the candidate and the voter's region, hometown, or community to create a personalized campaign message.\n\n"""
+        prompt += f"Voter Data: {voter_data}\n"
+        prompt += f"Base Message: {base_message}\n"
+        return self.querier.query(prompt)
+
+
+    def emphasize_similar_backgrounds(self, voter_data, base_message):
+        prompt = """You are provided with a base message and voter data. Identify and emphasize similarities in backgrounds, interests, or life experiences between the candidate and the voter to create a personalized campaign message.\n\n"""
+        prompt += f"Voter Data: {voter_data}\n"
+        prompt += f"Base Message: {base_message}\n"
+        return self.querier.query(prompt)
+
+
     def translate_speech(self, generated_speech, language):
         return self.translator.translate(generated_speech, language)
 
@@ -61,10 +82,19 @@ Then, regenerate the speech by improving those metrics and make it sound more hu
 
         primed_speech = self.prime_speech(liwc_improved_speech)
 
+        personalized_messaging = self.personalized_messaging(primed_speech)
+
+        add_local_references = self.add_local_references(personalized_messaging)
+        
+        emphasize_similar_backgrounds = self.emphasize_similar_backgrounds(add_local_references)
+        
         filtered_speech = self.filter_speech(primed_speech)
 
         if language != "en":
             translated_speech = self.translate_speech(filtered_speech, language)    
             return translated_speech
-
+            
         return filtered_speech
+
+    
+   
